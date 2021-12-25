@@ -49,9 +49,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         iniViews();
 
         CastMovieData castMovieData = new CastMovieData();
-        ProductionCompaniesMovieData productionCompaniesMovieData = new ProductionCompaniesMovieData();
+     //   ProductionCompaniesMovieData productionCompaniesMovieData = new ProductionCompaniesMovieData();
         castMovieData.execute();
-        productionCompaniesMovieData.execute();
+      //  productionCompaniesMovieData.execute();
 
     }
 
@@ -61,7 +61,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         String imageCover = getIntent().getStringExtra("imgCover");
 
         rvCast = findViewById(R.id.rvCast);
-        rvCompanies = findViewById(R.id.rvComp);
+       // rvCompanies = findViewById(R.id.rvComp);
 
         movieThumbnailImg = findViewById(R.id.detailMovieCover);
         Glide.with(this).load("https://image.tmdb.org/t/p/w500" +imageResourceId).into(movieThumbnailImg);
@@ -90,11 +90,11 @@ public class MovieDetailActivity extends AppCompatActivity {
         rvCast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
-    private void setUpRvMovieCompanies(){
+   /* private void setUpRvMovieCompanies(){
         MovieCompanieAdapter movieCompanieAdapter = new MovieCompanieAdapter(this, movieCompanies);
         rvCompanies.setAdapter(movieCompanieAdapter);
         rvCompanies.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-    }
+    }*/
 
     class CastMovieData extends AsyncTask<String, String, String> {
         private final String JSON_URL = "https://api.themoviedb.org/3/movie/"+ String.valueOf(getIntent().getIntExtra("id", 0)).trim() +"/credits?api_key=5cc9ceb908ad9216a127b5d99cbdd8e5";
@@ -167,7 +167,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
 
     }
-    class ProductionCompaniesMovieData extends AsyncTask<String, String, String> {
+    /*class ProductionCompaniesMovieData extends AsyncTask<String, String, String> {
         private final String JSON_URL = "https://api.themoviedb.org/3/movie/"+ String.valueOf(getIntent().getIntExtra("id", 0)).trim() +"?api_key=5cc9ceb908ad9216a127b5d99cbdd8e5";
 
 
@@ -208,9 +208,9 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
 
             return current;
-        }
+        }*/
 
-        @Override
+        /*@Override
         protected void onPostExecute(String s) {
 
             try {
@@ -231,10 +231,10 @@ public class MovieDetailActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            setUpRvMovieCompanies();
+          //  setUpRvMovieCompanies();
             //Toast.makeText(MovieDetailActivity.this, String.valueOf(movieCompanies.get(4).getImg()), Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
 
-    }
+    
 }
