@@ -9,12 +9,13 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackgroundBorderless">
-
-    <ImageView
+<!-- https://stackoverflow.com/questions/31675420/set-round-corner-image-in-imageview-->
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgMovie"
         android:layout_width="0dp"
         android:layout_height="175dp"
         android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/roundedCorners"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/gotham_light"
         android:text="TextView"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
