@@ -65,6 +65,8 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         setContentView(R.layout.home_activity_with_nav);
 
 
+
+
         iniViews();
 
 
@@ -83,6 +85,13 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     }
 
     private void setBottomNav_NavDraView(){
+
+
+        setSupportActionBar(toolbar);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
