@@ -54,9 +54,26 @@
             android:fontFamily="@font/gotham_medium"
             android:text="TextView"
             android:textColor="?colorAccent"
+            android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/detailMovieImg"
             app:layout_constraintTop_toBottomOf="@+id/detailMovieCover" />
+
+        <TextView
+            android:id="@+id/movieRating"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/gotham_medium"
+            android:text="Rating"
+            android:drawableLeft="@drawable/ic_baseline_star_24"
+            android:textColor="?colorAccent"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/detailMovieImg"
+            app:layout_constraintTop_toBottomOf="@+id/detailMovieTitle" />
 
         <TextView
             android:id="@+id/detailMovieDesc"
@@ -65,7 +82,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="10dp"
-            android:fontFamily="@font/gotham_light"
+            android:fontFamily="@font/gotham_medium"
             android:lineSpacingExtra="8dp"
             android:text="@string/simple_text"
             android:textColor="@color/white"
@@ -77,6 +94,7 @@
             android:id="@+id/textView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="@color/text_bg_blue"
             android:fontFamily="@font/gotham_medium"
             android:padding="16dp"
@@ -96,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -106,6 +106,7 @@ public class SearchActivity extends AppCompatActivity implements MovieItemClickL
         Intent intent = new Intent(this, MovieDetailActivity.class);
         intent.putExtra("title", movie.getTitle());
         intent.putExtra("imgURL", movie.getThumbnail());
+        intent.putExtra("rating",movie.getRating());
         intent.putExtra("imgCover", movie.getCoverPhoto());
         intent.putExtra("description", movie.getDescription());
         intent.putExtra("id", movie.getId());
@@ -177,6 +178,7 @@ public class SearchActivity extends AppCompatActivity implements MovieItemClickL
                     Movie movie = new Movie();
                     movie.setTitle(jsonObject1.getString("original_title"));
                     movie.setThumbnail(jsonObject1.getString("backdrop_path"));
+                    movie.setRating(String.valueOf(jsonObject1.getDouble("vote_average")));
                     movie.setCoverPhoto(jsonObject1.getString("poster_path"));
                     movie.setId(jsonObject1.getInt("id"));
                     movie.setDescription(jsonObject1.getString("overview"));

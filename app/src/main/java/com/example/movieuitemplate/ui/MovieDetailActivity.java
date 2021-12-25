@@ -34,7 +34,7 @@ import java.util.List;
 public class MovieDetailActivity extends AppCompatActivity {
 
     private ImageView movieThumbnailImg, movieCoverImg;
-    private TextView tvTitle, tvDescription;
+    private TextView tvTitle, tvDescription,tvRating;
     private RecyclerView rvCast, rvCompanies;
     private CastAdapter castAdapter;
 
@@ -57,6 +57,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     void iniViews(){
         String movieTitle = getIntent().getStringExtra("title");
+        String movieRating = getIntent().getStringExtra("rating");
         String imageResourceId = getIntent().getStringExtra("imgURL");
         String imageCover = getIntent().getStringExtra("imgCover");
 
@@ -71,6 +72,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         tvTitle = findViewById(R.id.detailMovieTitle);
         tvTitle.setText(movieTitle);
+
+        tvRating = findViewById(R.id.movieRating);
+        tvRating.setText(movieRating);
 
        // getSupportActionBar().setTitle(movieTitle);
 
@@ -236,5 +240,5 @@ public class MovieDetailActivity extends AppCompatActivity {
         }*/
 
 
-    
+
 }
