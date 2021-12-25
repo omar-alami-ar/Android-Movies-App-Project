@@ -80,8 +80,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         setBottomNav_NavDraView();
 
 
-
-
     }
 
     private void setBottomNav_NavDraView(){

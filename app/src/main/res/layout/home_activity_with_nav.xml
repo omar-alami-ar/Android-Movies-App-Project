@@ -30,7 +30,8 @@
             android:elevation="4dp"
             app:itemIconSize="27dp"
             app:itemIconTint="@drawable/item_selector_bottom_nav"
-            app:itemTextColor="?colorAccent" />
+            app:itemTextColor="?colorAccent"
+            app:menu="@menu/bottom_navigation_menu" />
         <!--app:labelVisibilityMode="unlabeled"  utiliser pour cacher l'ecriture -->
 
         <androidx.appcompat.widget.Toolbar

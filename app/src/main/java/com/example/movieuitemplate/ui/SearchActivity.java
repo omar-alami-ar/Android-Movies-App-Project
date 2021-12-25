@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.movieuitemplate.R;
 import com.example.movieuitemplate.adapters.MovieAdapter;
 import com.example.movieuitemplate.adapters.MovieItemClickListener;
+import com.example.movieuitemplate.adapters.MovieSearchAdapter;
 import com.example.movieuitemplate.models.Movie;
 
 import org.json.JSONArray;
@@ -40,7 +41,7 @@ public class SearchActivity extends AppCompatActivity implements MovieItemClickL
 
     private List<Movie> movies = new ArrayList<>();
 
-    private MovieAdapter movieAdapter;
+    private MovieSearchAdapter movieAdapter;
 
     private static boolean firstTime = true;
 
@@ -89,7 +90,7 @@ public class SearchActivity extends AppCompatActivity implements MovieItemClickL
 
         if (firstTime) {
             firstTime = false;
-            movieAdapter = new MovieAdapter(this, movies, this);
+            movieAdapter = new MovieSearchAdapter(this, movies, this);
             rvMovies.setAdapter(movieAdapter);
             rvMovies.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         }else{
