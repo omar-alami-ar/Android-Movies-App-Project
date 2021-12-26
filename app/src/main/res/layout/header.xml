@@ -14,7 +14,7 @@
         android:id="@+id/educationIcon"/>
 
     <TextView
-        android:id="@+id/navigetionViewUserName"
+        android:id="@+id/navUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alex_brush"
@@ -23,7 +23,7 @@
         android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/navigetionViewEmail"
+        android:id="@+id/navEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="email"
