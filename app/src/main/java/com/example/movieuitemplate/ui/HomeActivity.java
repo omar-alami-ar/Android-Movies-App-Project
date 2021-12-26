@@ -146,8 +146,10 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
                                 switch (which) {
                                     case DialogInterface.BUTTON_POSITIVE:
                                         Toast.makeText(HomeActivity.this, "Have a nice day and goodbye ", Toast.LENGTH_SHORT).show();
+                                        FirebaseAuth.getInstance().signOut();
                                         Intent intent = new Intent(HomeActivity.this, StartActivity.class);
                                         startActivity(intent);
+                                        finish();
                                         break;
                                 }
                             }
