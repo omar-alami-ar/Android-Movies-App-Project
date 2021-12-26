@@ -86,9 +86,12 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
 
 
         setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
+        getSupportActionBar().setTitle("Home");
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorAccent));
         toggle.syncState();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
