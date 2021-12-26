@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    >
 
     <group>
         <item
@@ -15,6 +15,10 @@
         <item android:title="Profil"
             >
             <menu>
+                <item android:title="Watchlists"
+                    android:id="@+id/watchlists"
+                    android:icon="@drawable/ic_baseline_local_movies_24"
+                    />
                 <item android:title="logout"
                     android:id="@+id/logout"
                     android:icon="@drawable/ic_baseline_door_sliding_24"
