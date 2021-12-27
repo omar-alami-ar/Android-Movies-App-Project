@@ -121,6 +121,11 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
                         Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.discover:
+                        Toast.makeText(HomeActivity.this, "we would go to discover page ", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(HomeActivity.this, DiscoverActivity.class);
+                        startActivity(intent1);
+                        break;
                     case R.id.more:
                         Toast.makeText(HomeActivity.this, "we would go to more page", Toast.LENGTH_SHORT).show();
                         break;

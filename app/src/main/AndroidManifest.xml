@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieUiTemplate">
         <activity
+            android:name=".ui.GenreMoviesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.DiscoverActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.WatchlistsActivity"
             android:exported="false" />
         <activity
