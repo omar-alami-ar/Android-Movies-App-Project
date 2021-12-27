@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.example.movieuitemplate.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -37,11 +38,14 @@ public class WatchlistsActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Watchlists");
                 HashMap<String,String> hashMap = new HashMap<>();
                 hashMap.put("name",name.getText().toString());
-                hashMap.put("userId",firebaseUser.getUid());
-                reference.child("Watchlists").push().setValue(hashMap);
+                String random = String.valueOf((int )(Math.random() * 99999 + 1));
+                String watchlistID = name.getText().toString()+random;
+                hashMap.put("id",watchlistID);
+
+                reference.push().setValue(hashMap);
 
             }
         });
