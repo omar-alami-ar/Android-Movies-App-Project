@@ -4,15 +4,19 @@ import java.util.List;
 
 public class Watchlist {
 
-    private String id,userId,name;
+    private String id,name;
     List<String> movies;
 
     public Watchlist() {
     }
 
-    public Watchlist(String id, String userId, String name, List<String> movies) {
+    public Watchlist(String name, List<String> movies) {
+        this.name = name;
+        this.movies = movies;
+    }
+
+    public Watchlist(String id,  String name, List<String> movies) {
         this.id = id;
-        this.userId = userId;
         this.name = name;
         this.movies = movies;
     }
@@ -23,14 +27,6 @@ public class Watchlist {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getName() {
