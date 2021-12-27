@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.movieuitemplate.R;
 import com.example.movieuitemplate.adapters.MovieAdapter;
@@ -53,6 +54,7 @@ public class GenreMoviesActivity extends AppCompatActivity implements MovieItemC
     private void init(){
         genreTitle = findViewById(R.id.genreTitleMovie);
         rView = findViewById(R.id.rvgenreMovies);
+        genreTitle.setText(getIntent().getStringExtra("title"));
     }
 
     private void setUpRVMovies() {
@@ -152,6 +154,7 @@ public class GenreMoviesActivity extends AppCompatActivity implements MovieItemC
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            Toast.makeText(GenreMoviesActivity.this, String.valueOf(genreSelectedMovies.size()), Toast.LENGTH_SHORT).show();
             setUpRVMovies();
         }
 

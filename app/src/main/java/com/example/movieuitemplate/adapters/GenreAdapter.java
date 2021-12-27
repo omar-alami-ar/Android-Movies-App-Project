@@ -102,7 +102,8 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
                         intent.putExtra("genre", 12);
                         break;
                 }
-
+                intent.putExtra("title", mData.get(holder.getAdapterPosition()).getTitle());
+                mContext.startActivity(intent);
             }
         });
     }
