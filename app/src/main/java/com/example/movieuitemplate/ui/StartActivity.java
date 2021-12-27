@@ -50,7 +50,7 @@ public class StartActivity extends AppCompatActivity {
 
         register = findViewById(R.id.register);
         login= findViewById(R.id.login);
-        google = findViewById(R.id.google);
+        google = findViewById(R.id.btnAddToWatchlist);
 
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();

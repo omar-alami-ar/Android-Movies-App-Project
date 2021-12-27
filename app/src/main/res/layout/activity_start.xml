@@ -35,13 +35,13 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/google"
+        app:layout_constraintBottom_toTopOf="@id/btnAddToWatchlist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.229"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/google"
+        android:id="@+id/btnAddToWatchlist"
         style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="297dp"
         android:layout_height="59dp"
