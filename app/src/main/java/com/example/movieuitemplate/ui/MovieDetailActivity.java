@@ -1,22 +1,37 @@
 package com.example.movieuitemplate.ui;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.movieuitemplate.R;
 import com.example.movieuitemplate.adapters.CastAdapter;
-import com.example.movieuitemplate.adapters.MovieCompanieAdapter;
 import com.example.movieuitemplate.models.Cast;
 import com.example.movieuitemplate.models.MovieCompanie;
+import com.example.movieuitemplate.models.WatchListItem;
+import com.example.movieuitemplate.models.Watchlist;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,6 +52,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView tvTitle, tvDescription,tvRating;
     private RecyclerView rvCast, rvCompanies;
     private CastAdapter castAdapter;
+    private MaterialButton addToWatchlist;
+
+    ListView watchlistLV;
+    ArrayList<WatchListItem>  wlArrayList;
+
+    FirebaseUser firebaseUser;
+    DatabaseReference reference;
 
     private final List<Cast> castData = new ArrayList<>();
     private final List<MovieCompanie> movieCompanies = new ArrayList<>();
@@ -47,6 +69,58 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
 
         iniViews();
+
+        addToWatchlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MovieDetailActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.watchlistlv_activity,null);
+                watchlistLV = mView.findViewById(R.id.listWatchlists);
+                //wlArrayList = new ArrayList<>();
+                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+                final List<String> watchlists = new ArrayList<String>();
+                reference.child("Watchlists").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                        for (DataSnapshot watchListSnapshot: snapshot.getChildren()) {
+                            String watchlistName = watchListSnapshot.child("name").getValue(String.class);
+
+                            watchlists.add(watchlistName);
+
+
+                        }
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MovieDetailActivity.this, android.R.layout.simple_list_item_1 , watchlists);
+                        watchlistLV.setAdapter(arrayAdapter);
+
+                        mBuilder.setTitle("Choose a watchlist");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+
+
+
+
+                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+            }
+        });
+
 
         CastMovieData castMovieData = new CastMovieData();
      //   ProductionCompaniesMovieData productionCompaniesMovieData = new ProductionCompaniesMovieData();
@@ -75,6 +149,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         tvRating = findViewById(R.id.movieRating);
         tvRating.setText(movieRating);
+
+        addToWatchlist = findViewById(R.id.btnAddToWatchlist);
+
 
        // getSupportActionBar().setTitle(movieTitle);
 
