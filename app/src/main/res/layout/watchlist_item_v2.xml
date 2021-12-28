@@ -15,7 +15,7 @@
         android:fontFamily="@font/gotham_medium"
         android:textStyle="bold"
         android:textAlignment="center"
-        android:textColor="@color/black" />
+        android:textColor="@color/white" />
 
 
 </LinearLayout>

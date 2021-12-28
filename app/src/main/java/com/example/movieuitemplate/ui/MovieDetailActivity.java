@@ -98,7 +98,9 @@ public class MovieDetailActivity extends AppCompatActivity {
                             WatchListItem watchListItem = watchListSnapshot.getValue(WatchListItem.class);
                             watchlists.add(watchListItem);
                         }
-                        watchlistLV.setAdapter(new WatchlistLVadapter(MovieDetailActivity.this,watchlists,dialog));
+                        WatchlistLVadapter adapter = new WatchlistLVadapter(MovieDetailActivity.this,watchlists,dialog);
+                        adapter.movieID = 
+                        watchlistLV.setAdapter(adapter);
                     }
 
                     @Override

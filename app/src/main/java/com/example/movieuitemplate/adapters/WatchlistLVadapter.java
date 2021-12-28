@@ -16,13 +16,24 @@ import androidx.annotation.Nullable;
 
 import com.example.movieuitemplate.R;
 import com.example.movieuitemplate.models.WatchListItem;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class WatchlistLVadapter extends ArrayAdapter<WatchListItem> {
 
+    FirebaseUser firebaseUser;
+    DatabaseReference reference;
     DialogInterface dialog;
+    public  String movieName,movieID;
     // constructor for our list view adapter.
     public WatchlistLVadapter(@NonNull Context context, ArrayList<WatchListItem> dataModalArrayList) {
         super(context, 0, dataModalArrayList);
@@ -66,8 +77,18 @@ public class WatchlistLVadapter extends ArrayAdapter<WatchListItem> {
             public void onClick(View v) {
                 // on the item click on our list view.
                 // we are displaying a toast message.
+                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid())
+                        .child("Watchlists").child(dataModal.getId());
+                HashMap<String,String> hashMap = new HashMap<>();
+                hashMap.put("movieID","123");
+                hashMap.put("movieName","Spiderman");
+
+                reference.child("Movies").push().setValue(hashMap);
+
+
                 dialog.dismiss();
-                Toast.makeText(getContext(), "Item clicked is : " + dataModal.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Item clicked is : " + dataModal.getId(), Toast.LENGTH_SHORT).show();
 
             }
         });
