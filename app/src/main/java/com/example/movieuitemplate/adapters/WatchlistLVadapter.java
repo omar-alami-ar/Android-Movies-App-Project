@@ -1,6 +1,8 @@
 package com.example.movieuitemplate.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +22,15 @@ import java.util.ArrayList;
 
 public class WatchlistLVadapter extends ArrayAdapter<WatchListItem> {
 
+    DialogInterface dialog;
     // constructor for our list view adapter.
     public WatchlistLVadapter(@NonNull Context context, ArrayList<WatchListItem> dataModalArrayList) {
         super(context, 0, dataModalArrayList);
+    }
+
+    public WatchlistLVadapter(@NonNull Context context, ArrayList<WatchListItem> dataModalArrayList, DialogInterface dialog) {
+        super(context, 0, dataModalArrayList);
+        this.dialog = dialog;
     }
 
     @NonNull
@@ -58,7 +66,9 @@ public class WatchlistLVadapter extends ArrayAdapter<WatchListItem> {
             public void onClick(View v) {
                 // on the item click on our list view.
                 // we are displaying a toast message.
+                dialog.dismiss();
                 Toast.makeText(getContext(), "Item clicked is : " + dataModal.getName(), Toast.LENGTH_SHORT).show();
+
             }
         });
         return listitemView;
