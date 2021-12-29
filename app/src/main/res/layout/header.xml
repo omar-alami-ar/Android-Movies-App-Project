@@ -11,7 +11,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/ic_baseline_local_movies_24"
-        android:id="@+id/educationIcon"/>
+        android:id="@+id/profileImg"/>
 
     <TextView
         android:id="@+id/navUsername"

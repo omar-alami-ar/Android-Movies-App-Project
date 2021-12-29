@@ -18,6 +18,7 @@ import com.example.movieuitemplate.R;
 import com.example.movieuitemplate.adapters.WatchlistLVadapter;
 import com.example.movieuitemplate.adapters.WatchlistsActivityAdapter;
 import com.example.movieuitemplate.models.WatchListItem;
+import com.example.movieuitemplate.models.Watchlist;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,21 +29,26 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.CountDownLatch;
 
 public class WatchlistsActivity extends AppCompatActivity {
 
     EditText name;
     Button add;
 
-
     FirebaseUser firebaseUser;
     ListView watchlistsListView;
     DatabaseReference reference;
+
+    WatchlistsActivityAdapter adapter;
+
+    ArrayList<WatchListItem> watchlists = new ArrayList<WatchListItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watchlists);
+
 
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -58,7 +64,9 @@ public class WatchlistsActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-        final ArrayList<WatchListItem> watchlists = new ArrayList<WatchListItem>();
+
+
+
 
         reference.child("Watchlists").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -70,19 +78,26 @@ public class WatchlistsActivity extends AppCompatActivity {
                     watchListItem.setCount(String.valueOf(count));
                     //watchListItem.setImage("https://image.tmdb.org/t/p/w1280//6Y9fl8tD1xtyUrOHV2MkCYTpzgi.jpg");
                     watchlists.add(watchListItem);
+                    //Toast.makeText(WatchlistsActivity.this, String.valueOf(watchlists.size()), Toast.LENGTH_SHORT).show();
                 }
-                final ListView listView = (ListView) findViewById(R.id.watchlistsListView);
-                WatchlistsActivityAdapter adapter = new WatchlistsActivityAdapter(WatchlistsActivity.this, watchlists);
-                listView.setAdapter(adapter);
+                Toast.makeText(WatchlistsActivity.this, String.valueOf(watchlists.size()), Toast.LENGTH_SHORT).show();
+                setUpWatchListView();
+//                WatchlistsActivityAdapter adapter = new WatchlistsActivityAdapter(WatchlistsActivity.this, watchlists);
+//                watchlistsListView.setAdapter(adapter);
+//                adapter.notifyDataSetChanged();
+
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
 
-
         });
+
+
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,13 +111,22 @@ public class WatchlistsActivity extends AppCompatActivity {
                     hashMap.put("id", watchlistID);
 
                     reference.child(watchlistID).setValue(hashMap);
-                    //WatchlistsActivityAdapter adapter = new WatchlistsActivityAdapter();
-                    //adapter.notifyDataSetChanged();
+                    WatchListItem watchlist = new WatchListItem(watchlistID, name.getText().toString(), "0");
+                    watchlists.add(watchlist);
+                    adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(WatchlistsActivity.this, "Watchlist name cannot be empty", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
+    private void setUpWatchListView(){
+        adapter = new WatchlistsActivityAdapter(WatchlistsActivity.this, watchlists);
+        watchlistsListView.setAdapter(adapter);
+    }
+
+
+
+
+
 }
