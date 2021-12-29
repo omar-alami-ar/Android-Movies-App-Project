@@ -3,6 +3,8 @@ package com.example.movieuitemplate.models;
 public class WatchListItem {
     private String name;
     private String id;
+    private String count;
+    private String image;
 
     public WatchListItem() {
     }
@@ -31,5 +33,21 @@ public class WatchListItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
