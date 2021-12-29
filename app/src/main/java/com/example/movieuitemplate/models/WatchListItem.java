@@ -1,8 +1,8 @@
 package com.example.movieuitemplate.models;
 
 public class WatchListItem {
-    private String name;
     private String id;
+    private String name;
     private String count;
     private String image;
 
@@ -16,7 +16,12 @@ public class WatchListItem {
     public WatchListItem(String id,String name) {
         this.name=name;
         this.id =id;
+    }
 
+    public WatchListItem(String id, String name, String count) {
+        this.id = id;
+        this.name = name;
+        this.count = count;
     }
 
     public String getId() {
