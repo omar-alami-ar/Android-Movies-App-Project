@@ -1,6 +1,9 @@
 package com.example.movieuitemplate.ui;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +24,7 @@ public class WatchlistsActivity extends AppCompatActivity {
     EditText name;
     Button add;
 
+
     FirebaseUser firebaseUser;
 
 
@@ -28,6 +32,7 @@ public class WatchlistsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watchlists);
+
 
         add=findViewById(R.id.btnAdd);
         name = findViewById(R.id.watchlistName);
@@ -45,7 +50,7 @@ public class WatchlistsActivity extends AppCompatActivity {
                 String watchlistID = name.getText().toString()+random;
                 hashMap.put("id",watchlistID);
 
-                reference.push().setValue(hashMap);
+                reference.child(watchlistID).setValue(hashMap);
 
             }
         });
