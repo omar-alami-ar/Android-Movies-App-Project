@@ -74,6 +74,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         addToWatchlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String movieTitle = getIntent().getStringExtra("title");
+                String movieID = String.valueOf(getIntent().getIntExtra("id",0));
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MovieDetailActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.watchlistlv_activity,null);
                 mBuilder.setTitle("Choose a watchlist");
@@ -99,7 +101,8 @@ public class MovieDetailActivity extends AppCompatActivity {
                             watchlists.add(watchListItem);
                         }
                         WatchlistLVadapter adapter = new WatchlistLVadapter(MovieDetailActivity.this,watchlists,dialog);
-                        adapter.movieID = 
+                        adapter.movieID = movieID;
+                        adapter.movieName = movieTitle;
                         watchlistLV.setAdapter(adapter);
                     }
 
@@ -124,6 +127,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     void iniViews(){
         String movieTitle = getIntent().getStringExtra("title");
+        //String movieID = String.valueOf(getIntent().getIntExtra("id",0));
         String movieRating = getIntent().getStringExtra("rating");
         String imageResourceId = getIntent().getStringExtra("imgURL");
         String imageCover = getIntent().getStringExtra("imgCover");

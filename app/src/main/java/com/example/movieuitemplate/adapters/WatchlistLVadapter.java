@@ -81,8 +81,8 @@ public class WatchlistLVadapter extends ArrayAdapter<WatchListItem> {
                 reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid())
                         .child("Watchlists").child(dataModal.getId());
                 HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put("movieID","123");
-                hashMap.put("movieName","Spiderman");
+                hashMap.put("movieID",movieID);
+                hashMap.put("movieName",movieName);
 
                 reference.child("Movies").push().setValue(hashMap);
 
