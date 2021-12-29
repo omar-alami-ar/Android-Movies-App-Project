@@ -44,6 +44,12 @@ public class WatchlistsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watchlists);
 
+        Toolbar toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Browse Watchlists");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         watchlistsListView = findViewById(R.id.watchlistsListView);
 
         add=findViewById(R.id.btnAdd);
@@ -91,7 +97,7 @@ public class WatchlistsActivity extends AppCompatActivity {
 
                     reference.child(watchlistID).setValue(hashMap);
                     //WatchlistsActivityAdapter adapter = new WatchlistsActivityAdapter();
-                    adapter.notifyDataSetChanged();
+                    //adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(WatchlistsActivity.this, "Watchlist name cannot be empty", Toast.LENGTH_SHORT).show();
                 }

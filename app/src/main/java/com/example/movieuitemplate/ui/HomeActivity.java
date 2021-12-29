@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -114,15 +115,16 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
-                        Toast.makeText(HomeActivity.this, "You are already in home", Toast.LENGTH_SHORT).show();
+
+                        //Toast.makeText(HomeActivity.this, "You are already in home", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.search:
-                        Toast.makeText(HomeActivity.this, "we would go to search page ", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "we would go to search page ", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.discover:
-                        Toast.makeText(HomeActivity.this, "we would go to discover page ", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "we would go to discover page ", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent(HomeActivity.this, DiscoverActivity.class);
                         startActivity(intent1);
                         break;
@@ -143,7 +145,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
                         startActivity(intent);
                         break;
                     case R.id.mainHome:
-                        Toast.makeText(HomeActivity.this, "you are already in the Main Home", Toast.LENGTH_SHORT).show();
+                        drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.logout:
 

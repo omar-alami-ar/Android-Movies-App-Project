@@ -19,6 +19,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.WatchlistsActivity"
+            android:parentActivityName=".ui.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.SearchActivity"
