@@ -25,10 +25,13 @@ import com.example.movieuitemplate.R;
 import com.example.movieuitemplate.adapters.CastAdapter;
 import com.example.movieuitemplate.adapters.MovieAdapter;
 import com.example.movieuitemplate.adapters.MovieItemClickListener;
+import com.example.movieuitemplate.adapters.ReviewAdapter;
 import com.example.movieuitemplate.adapters.WatchlistLVadapter;
+import com.example.movieuitemplate.adapters.WatchlistsActivityAdapter;
 import com.example.movieuitemplate.models.Cast;
 import com.example.movieuitemplate.models.Movie;
 import com.example.movieuitemplate.models.MovieCompanie;
+import com.example.movieuitemplate.models.Review;
 import com.example.movieuitemplate.models.WatchListItem;
 import com.example.movieuitemplate.models.Watchlist;
 import com.google.android.material.button.MaterialButton;
@@ -62,11 +65,15 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     private MovieAdapter    movieAdapter;
     private MaterialButton addToWatchlist;
 
+    ListView reviewsListView;
+    ReviewAdapter reviewAdapter;
+    ArrayList<Review> reviews = new ArrayList<Review>();
+
     ListView watchlistLV;
     //ArrayList<WatchListItem>  wlArrayList;
 
     FirebaseUser firebaseUser;
-    DatabaseReference reference;
+    DatabaseReference reference,reviewsReference;
 
     private final List<Cast> castData = new ArrayList<>();
     private final List<Movie> similarMovies = new ArrayList<>();
@@ -76,9 +83,29 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-
+        reviewsListView = findViewById(R.id.lvReviews);
         iniViews();
 
+        reviewsReference = FirebaseDatabase.getInstance().getReference("Reviews");
+        reviewsReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot reviewSnapshot: snapshot.getChildren()) {
+                    Review review = reviewSnapshot.getValue(Review.class);
+                    //String image = watchListSnapshot.child("Movies").
+                    //watchListItem.setImage("https://image.tmdb.org/t/p/w1280//6Y9fl8tD1xtyUrOHV2MkCYTpzgi.jpg");
+                    reviews.add(review);
+
+                    //Toast.makeText(WatchlistsActivity.this, String.valueOf(watchlists.size()), Toast.LENGTH_SHORT).show();
+                }
+                setUpReviewsListView();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         addToWatchlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +161,11 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         castMovieData.execute();
         SimilarMoviesData similarMoviesData = new SimilarMoviesData();
         similarMoviesData.execute();
+    }
+
+    private void setUpReviewsListView() {
+        reviewAdapter = new ReviewAdapter(MovieDetailActivity.this, reviews);
+        reviewsListView.setAdapter(reviewAdapter);
     }
 
     private void setupRvCast() {
