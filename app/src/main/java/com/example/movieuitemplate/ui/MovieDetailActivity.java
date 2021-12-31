@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,15 +27,18 @@ import com.example.movieuitemplate.adapters.CastAdapter;
 import com.example.movieuitemplate.adapters.MovieAdapter;
 import com.example.movieuitemplate.adapters.MovieItemClickListener;
 import com.example.movieuitemplate.adapters.ReviewAdapter;
+import com.example.movieuitemplate.adapters.ReviewsAdapter;
 import com.example.movieuitemplate.adapters.WatchlistLVadapter;
 import com.example.movieuitemplate.adapters.WatchlistsActivityAdapter;
 import com.example.movieuitemplate.models.Cast;
 import com.example.movieuitemplate.models.Movie;
 import com.example.movieuitemplate.models.MovieCompanie;
 import com.example.movieuitemplate.models.Review;
+import com.example.movieuitemplate.models.User;
 import com.example.movieuitemplate.models.WatchListItem;
 import com.example.movieuitemplate.models.Watchlist;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -54,6 +58,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MovieDetailActivity extends AppCompatActivity implements MovieItemClickListener {
@@ -64,6 +69,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     private CastAdapter castAdapter;
     private MovieAdapter    movieAdapter;
     private MaterialButton addToWatchlist;
+    TextInputLayout tbReview;
 
     ListView reviewsListView;
     ReviewAdapter reviewAdapter;
@@ -166,6 +172,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     private void setUpReviewsListView() {
         reviewAdapter = new ReviewAdapter(MovieDetailActivity.this, reviews);
         reviewsListView.setAdapter(reviewAdapter);
+        //reviewsListView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
     private void setupRvCast() {
@@ -191,6 +198,41 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         rvCast = findViewById(R.id.rvCast);
         rvSimilar = findViewById(R.id.rvSimilar);
        // rvCompanies = findViewById(R.id.rvComp);
+
+        tbReview = findViewById(R.id.tbReview);
+        tbReview.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                if(tbReview.getEditText().getText()!=null) {
+                    //Toast.makeText(MovieDetailActivity.this, tbReview.getEditText().getText().toString(), Toast.LENGTH_SHORT).show();
+                    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    reference = FirebaseDatabase.getInstance().getReference("Reviews");
+                    DatabaseReference usernameReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+                    usernameReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                             User user = snapshot.getValue(User.class);
+                             String username = user.getUsername();
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("username", username);
+                            hashMap.put("userId", firebaseUser.getUid());
+                            hashMap.put("movieId", String.valueOf(getIntent().getIntExtra("id", 0)));
+                            hashMap.put("reviewText", tbReview.getEditText().getText().toString());
+
+                            reference.push().setValue(hashMap);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+            }
+        });
+
+
 
         movieThumbnailImg = findViewById(R.id.detailMovieCover);
         Glide.with(this).load("https://image.tmdb.org/t/p/w500" +imageResourceId).into(movieThumbnailImg);

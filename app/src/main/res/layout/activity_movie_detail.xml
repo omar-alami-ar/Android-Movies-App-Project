@@ -38,10 +38,10 @@
             android:layout_marginStart="24dp"
             android:scaleType="centerCrop"
             android:transitionName="sharedName"
-            app:shapeAppearanceOverlay="@style/roundedCorners"
             app:layout_constraintBottom_toBottomOf="@+id/detailMovieCover"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailMovieCover"
+            app:shapeAppearanceOverlay="@style/roundedCorners"
             app:srcCompat="@drawable/ic_launcher_background" />
 
         <TextView
@@ -66,9 +66,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
+            android:drawableLeft="@drawable/ic_baseline_star_24"
             android:fontFamily="@font/gotham_medium"
             android:text="Rating"
-            android:drawableLeft="@drawable/ic_baseline_star_24"
             android:textColor="?colorAccent"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,8 +83,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/colorAccent"
-            android:text="Add to watchlist"
             android:fontFamily="@font/gotham_medium"
+            android:text="Add to watchlist"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -97,6 +97,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailMovieImg" />
+
         <TextView
             android:id="@+id/detailMovieDesc"
             android:layout_width="0dp"
@@ -195,18 +196,52 @@
             app:layout_constraintTop_toBottomOf="@+id/rvSimilar"
             app:layout_constraintVertical_bias="0.0" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tbReview"
+            style="@style/ReviewTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Write a review"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_baseline_send_24"
+            app:endIconTint="@color/colorAccent"
+            android:textColorHint="@color/white"
+            app:hintTextColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvReviews">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gotham_light"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="italic"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
         <ListView
+
             android:id="@+id/lvReviews"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="16dp"
+            android:nestedScrollingEnabled="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvReviews" />
+            app:layout_constraintTop_toBottomOf="@+id/tbReview" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,6 +26,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.MovieDetailActivity"
+
             android:exported="false" />
         <activity
             android:name=".ui.LoginActivity"

@@ -16,4 +16,7 @@
     <color name="azure">#ABCDC9</color>
 
 
+    <color name="mtrl_textinput_default_box_stroke_color">@color/colorAccent</color>
+
+
 </resources>
