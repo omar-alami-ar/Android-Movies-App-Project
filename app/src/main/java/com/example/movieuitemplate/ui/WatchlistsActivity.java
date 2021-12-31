@@ -78,10 +78,13 @@ public class WatchlistsActivity extends AppCompatActivity {
                     watchListItem.setCount(String.valueOf(count));
                     //watchListItem.setImage("https://image.tmdb.org/t/p/w1280//6Y9fl8tD1xtyUrOHV2MkCYTpzgi.jpg");
                     watchlists.add(watchListItem);
+
                     //Toast.makeText(WatchlistsActivity.this, String.valueOf(watchlists.size()), Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(WatchlistsActivity.this, String.valueOf(watchlists.size()), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(WatchlistsActivity.this, String.valueOf(watchlists.size()), Toast.LENGTH_SHORT).show();
                 setUpWatchListView();
+                //name.setText("");
+
 //                WatchlistsActivityAdapter adapter = new WatchlistsActivityAdapter(WatchlistsActivity.this, watchlists);
 //                watchlistsListView.setAdapter(adapter);
 //                adapter.notifyDataSetChanged();

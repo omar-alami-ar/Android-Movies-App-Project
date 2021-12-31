@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
@@ -20,8 +23,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.movieuitemplate.R;
 import com.example.movieuitemplate.adapters.CastAdapter;
+import com.example.movieuitemplate.adapters.MovieAdapter;
+import com.example.movieuitemplate.adapters.MovieItemClickListener;
 import com.example.movieuitemplate.adapters.WatchlistLVadapter;
 import com.example.movieuitemplate.models.Cast;
+import com.example.movieuitemplate.models.Movie;
 import com.example.movieuitemplate.models.MovieCompanie;
 import com.example.movieuitemplate.models.WatchListItem;
 import com.example.movieuitemplate.models.Watchlist;
@@ -47,12 +53,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieDetailActivity extends AppCompatActivity implements MovieItemClickListener {
 
     private ImageView movieThumbnailImg, movieCoverImg;
     private TextView tvTitle, tvDescription,tvRating;
-    private RecyclerView rvCast, rvCompanies;
+    private RecyclerView rvCast, rvCompanies,rvSimilar;
     private CastAdapter castAdapter;
+    private MovieAdapter    movieAdapter;
     private MaterialButton addToWatchlist;
 
     ListView watchlistLV;
@@ -62,6 +69,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     DatabaseReference reference;
 
     private final List<Cast> castData = new ArrayList<>();
+    private final List<Movie> similarMovies = new ArrayList<>();
     private final List<MovieCompanie> movieCompanies = new ArrayList<>();
 
     @Override
@@ -70,6 +78,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
 
         iniViews();
+
 
         addToWatchlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +132,21 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         CastMovieData castMovieData = new CastMovieData();
         castMovieData.execute();
+        SimilarMoviesData similarMoviesData = new SimilarMoviesData();
+        similarMoviesData.execute();
+    }
+
+    private void setupRvCast() {
+
+        castAdapter = new CastAdapter(this, castData);
+        rvCast.setAdapter(castAdapter);
+        rvCast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    }
+
+    private void setUpRVSimilarMovies() {
+        movieAdapter = new MovieAdapter(this, similarMovies, this);
+        rvSimilar.setAdapter(movieAdapter);
+        rvSimilar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
     void iniViews(){
@@ -133,6 +157,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         String imageCover = getIntent().getStringExtra("imgCover");
 
         rvCast = findViewById(R.id.rvCast);
+        rvSimilar = findViewById(R.id.rvSimilar);
        // rvCompanies = findViewById(R.id.rvComp);
 
         movieThumbnailImg = findViewById(R.id.detailMovieCover);
@@ -161,11 +186,22 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     }
 
-    private void setupRvCast() {
+    @Override
+    public void onMovieClick(Movie movie, ImageView movieImageView) {
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+        intent.putExtra("title", movie.getTitle());
+        intent.putExtra("imgURL", movie.getThumbnail());
+        intent.putExtra("rating",movie.getRating());
+        intent.putExtra("imgCover", movie.getCoverPhoto());
+        intent.putExtra("description", movie.getDescription());
+        intent.putExtra("id", movie.getId());
 
-        castAdapter = new CastAdapter(this, castData);
-        rvCast.setAdapter(castAdapter);
-        rvCast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        //Toast.makeText(this, String.valueOf(movie.getId()), Toast.LENGTH_SHORT).show();
+
+        //Animation
+
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MovieDetailActivity.this, movieImageView, "sharedName");
+        startActivity(intent, options.toBundle());
     }
 
 
@@ -216,6 +252,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
 
             try {
+                //Log.e("cast", "onPostExecute: cast found" );
                 JSONObject jsonObject = new JSONObject(s);
                 JSONArray jsonArray = jsonObject.getJSONArray("cast");
 
@@ -239,6 +276,84 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
 
 
+
+
     }
 
+    class SimilarMoviesData extends AsyncTask<String, String, String> {
+        private String JSON_URL = "https://api.themoviedb.org/3/movie/"+ String.valueOf(getIntent().getIntExtra("id", 0)).trim() +"/similar?api_key=eaccbc4d46ac90d1613d46f6937c1f4b&page=1";
+
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String current = "";
+
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+
+                try {
+                    url = new URL(JSON_URL);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream is = urlConnection.getInputStream();
+                    //InputStreamReader isr = new InputStreamReader(is);
+                    BufferedReader isr = new BufferedReader(new InputStreamReader(is));
+
+                    int data = isr.read();
+                    while (data != -1) {
+                        current += (char) data;
+                        data = isr.read();
+                    }
+                    return current;
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return current;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                //Log.e("similar", "onPostExecute: similar found" );
+
+                JSONObject jsonObject = new JSONObject(s);
+                JSONArray jsonArray = jsonObject.getJSONArray("results");
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                    Movie movie = new Movie();
+                    movie.setTitle(jsonObject1.getString("original_title"));
+                    movie.setThumbnail(jsonObject1.getString("backdrop_path"));
+                    movie.setCoverPhoto(jsonObject1.getString("poster_path"));
+                    movie.setRating(String.valueOf(jsonObject1.getDouble("vote_average")));
+                    movie.setId(jsonObject1.getInt("id"));
+                    movie.setDescription(jsonObject1.getString("overview"));
+
+                    similarMovies.add(movie);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            setUpRVSimilarMovies();
+        }
+
+
+
+
+    }
 }
