@@ -98,11 +98,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot reviewSnapshot: snapshot.getChildren()) {
                     Review review = reviewSnapshot.getValue(Review.class);
-                    //String image = watchListSnapshot.child("Movies").
-                    //watchListItem.setImage("https://image.tmdb.org/t/p/w1280//6Y9fl8tD1xtyUrOHV2MkCYTpzgi.jpg");
-                    reviews.add(review);
+                    if (review.getMovieId().equals(String.valueOf(getIntent().getIntExtra("id", 0)))) {
+                        reviews.add(review);
+                    }
 
-                    //Toast.makeText(WatchlistsActivity.this, String.valueOf(watchlists.size()), Toast.LENGTH_SHORT).show();
                 }
                 setUpReviewsListView();
             }

@@ -2,7 +2,7 @@ package com.example.movieuitemplate.models;
 
 public class Review {
     //public int id;
-    public String username,reviewText;
+    public String username,reviewText,movieId;
 
     public Review() {
     }
@@ -26,5 +26,13 @@ public class Review {
 
     public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
+    }
+
+    public String getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
     }
 }
