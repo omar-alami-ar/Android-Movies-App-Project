@@ -83,6 +83,10 @@ public class MoviesListAdapter extends BaseAdapter {
                         .child("Watchlists").child(watchlistId);
                 //Log.e("ref", reference.toString());
                 reference.child("Movies").child(String.valueOf(movie.getId())).removeValue();
+
+
+                Movie movieremove = listData.get(position);
+                listData.remove(movieremove);
                 notifyDataSetChanged();
             }
         });

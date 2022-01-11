@@ -44,7 +44,7 @@ public class WatchlistDetails extends AppCompatActivity {
 
         watchlistName = findViewById(R.id.watchlistDetailsName);
         watchlistName.setText(getIntent().getStringExtra("name"));
-        String watchlistId = getIntent().getStringExtra("id");
+
 
         moviesList = findViewById(R.id.moviesList);
 
