@@ -4,22 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.15260416666666668" />
-        <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/activity_login.xml" value="0.16296296296296298" />
-        <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/activity_main.xml" value="0.14666666666666667" />
-        <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/activity_movie_detail.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/activity_search.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/activity_watchlists.xml" value="0.16296296296296298" />
+        <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/background_round_padded.xml" value="0.1796875" />
         <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/header.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/home_activity_with_nav.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/item_comp.xml" value="0.1796875" />
         <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/item_movie.xml" value="0.1796875" />
         <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/item_search_movie.xml" value="0.1796875" />
-        <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/review_item.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/reviewslv_activity.xml" value="0.1796875" />
         <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/slider_item.xml" value="0.1796875" />
-        <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/watchlist_activity_item.xml" value="0.1796875" />
-        <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/layout/watchlistlv_activity.xml" value="0.1796875" />
         <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1796875" />
         <entry key="..\:/Users/omara/Documents/Movies App Project/app/src/main/res/menu/navigation_menu.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/drawable/custom_button_number.xml" value="0.2675925925925926" />
@@ -54,6 +46,8 @@
         <entry key="app/src/main/res/layout/item_movie.xml" value="0.2657407407407407" />
         <entry key="app/src/main/res/layout/item_search.xml" value="0.23425925925925925" />
         <entry key="app/src/main/res/layout/item_search_movie.xml" value="0.2657407407407407" />
+        <entry key="app/src/main/res/layout/review_item.xml" value="0.28205128205128205" />
+        <entry key="app/src/main/res/layout/reviewslv_activity.xml" value="0.28205128205128205" />
         <entry key="app/src/main/res/layout/slider_item.xml" value="0.2657407407407407" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.24259259259259258" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.24259259259259258" />
