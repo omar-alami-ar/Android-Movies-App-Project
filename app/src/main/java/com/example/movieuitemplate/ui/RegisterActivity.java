@@ -42,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Sign up");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         email = findViewById(R.id.email);

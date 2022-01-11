@@ -152,7 +152,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which) {
                                     case DialogInterface.BUTTON_POSITIVE:
-                                        Toast.makeText(HomeActivity.this, "Have a nice day and goodbye ", Toast.LENGTH_SHORT).show();
+                                       // Toast.makeText(HomeActivity.this, "Have a nice day and goodbye ", Toast.LENGTH_SHORT).show();
                                         FirebaseAuth.getInstance().signOut();
                                         Intent intent = new Intent(HomeActivity.this, StartActivity.class);
                                         startActivity(intent);
@@ -162,7 +162,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
                             }
                         };
                         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                        builder.setMessage("Are you sure you want to logOut ?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+                        builder.setMessage("Are you sure you want to logout ?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
                         break;
                     default:
                         break;

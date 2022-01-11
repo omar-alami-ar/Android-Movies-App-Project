@@ -33,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Sign in");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
+        //getSupportActionBar().col
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         email = findViewById(R.id.email);
