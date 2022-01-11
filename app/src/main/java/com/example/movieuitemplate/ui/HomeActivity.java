@@ -84,7 +84,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         iniViews();
 
 
-
         PopularMoviesData popularMoviesData = new PopularMoviesData();
         SlideMoviesData slideMoviesData = new SlideMoviesData();
         TopRatedMoviesData topRatedMoviesData = new TopRatedMoviesData();
@@ -93,7 +92,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         topRatedMoviesData.execute();
 
         setBottomNav_NavDraView();
-
 
 
     }

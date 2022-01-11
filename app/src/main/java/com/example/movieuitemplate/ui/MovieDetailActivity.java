@@ -134,6 +134,12 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
+                }).setPositiveButton("Create new list", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(MovieDetailActivity.this, WatchlistsActivity.class);
+                        startActivity(intent);
+                    }
                 });
                 AlertDialog dialog = mBuilder.create();
                 dialog.show();
