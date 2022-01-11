@@ -75,13 +75,13 @@
             app:layout_constraintStart_toEndOf="@+id/detailMovieImg"
             app:layout_constraintTop_toBottomOf="@+id/detailMovieTitle" />
 
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddToWatchlist"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="361dp"
             android:layout_height="54dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="8dp"
             android:backgroundTint="@color/colorAccent"
             android:fontFamily="@font/gotham_medium"
             android:text="Add to watchlist"
@@ -93,10 +93,35 @@
             app:iconPadding="-15dp"
             app:iconSize="50px"
             app:iconTint="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/detailMovieDesc"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddToLikes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailMovieImg" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddToLikes"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="361dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/notLiked"
+            android:fontFamily="@font/gotham_medium"
+            android:text="Add to likes"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:cornerRadius="10sp"
+            app:icon="@drawable/ic_baseline_favorite_24"
+            app:iconPadding="-15dp"
+            app:iconSize="50px"
+            app:iconTint="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/detailMovieDesc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnAddToWatchlist" />
+
+
 
         <TextView
             android:id="@+id/detailMovieDesc"
@@ -111,7 +136,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnAddToWatchlist" />
+            app:layout_constraintTop_toBottomOf="@+id/btnAddToLikes" />
 
         <TextView
             android:id="@+id/textView2"

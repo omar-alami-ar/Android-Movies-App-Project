@@ -15,8 +15,13 @@
 
     <color name="azure">#ABCDC9</color>
 
+    <color name="liked">#ED2939</color>
+    <color name="notLiked">#FA8072</color>
+
 
     <color name="mtrl_textinput_default_box_stroke_color">@color/colorAccent</color>
+
+
 
 
 </resources>

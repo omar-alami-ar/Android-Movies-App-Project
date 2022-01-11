@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieUiTemplate">
         <activity
+            android:name=".ui.WatchlistDetails"
+            android:parentActivityName=".ui.WatchlistsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.GenreMoviesActivity"
             android:exported="false" />
         <activity
@@ -19,14 +23,13 @@
             android:exported="false" />
         <activity
             android:name=".ui.WatchlistsActivity"
-            android:parentActivityName=".ui.HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.HomeActivity" />
         <activity
             android:name=".ui.SearchActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MovieDetailActivity"
-
             android:exported="false" />
         <activity
             android:name=".ui.LoginActivity"

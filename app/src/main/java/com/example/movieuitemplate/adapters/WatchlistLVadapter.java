@@ -33,7 +33,7 @@ public class WatchlistLVadapter extends ArrayAdapter<WatchListItem> {
     FirebaseUser firebaseUser;
     DatabaseReference reference;
     DialogInterface dialog;
-    public  String movieName,movieID;
+    public  String movieName,movieID,movieImg;
     // constructor for our list view adapter.
     public WatchlistLVadapter(@NonNull Context context, ArrayList<WatchListItem> dataModalArrayList) {
         super(context, 0, dataModalArrayList);
@@ -80,11 +80,12 @@ public class WatchlistLVadapter extends ArrayAdapter<WatchListItem> {
                 firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid())
                         .child("Watchlists").child(dataModal.getId());
-                HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put("movieID",movieID);
-                hashMap.put("movieName",movieName);
-
-                reference.child("Movies").push().setValue(hashMap);
+                HashMap<String,Object> hashMap = new HashMap<>();
+                //hashMap.put("id",movieID);
+                hashMap.put("id",Integer.valueOf(movieID));
+                hashMap.put("title",movieName);
+                hashMap.put("coverPhoto",movieImg);
+                reference.child("Movies").child(String.valueOf(movieID)).setValue(hashMap);
 
 
                 dialog.dismiss();

@@ -1,24 +1,22 @@
 package com.example.movieuitemplate.ui;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.movieuitemplate.R;
-import com.example.movieuitemplate.adapters.WatchlistLVadapter;
 import com.example.movieuitemplate.adapters.WatchlistsActivityAdapter;
 import com.example.movieuitemplate.models.WatchListItem;
-import com.example.movieuitemplate.models.Watchlist;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.CountDownLatch;
 
 public class WatchlistsActivity extends AppCompatActivity {
 
@@ -126,6 +123,23 @@ public class WatchlistsActivity extends AppCompatActivity {
     private void setUpWatchListView(){
         adapter = new WatchlistsActivityAdapter(WatchlistsActivity.this, watchlists);
         watchlistsListView.setAdapter(adapter);
+
+        watchlistsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Object item = watchlistsListView.getItemAtPosition(position);
+                WatchListItem watchlist = (WatchListItem) item;
+                String name = watchlist.getName();
+                String watchlistId = watchlist.getId();
+               // Toast.makeText(WatchlistsActivity.this, watchlistId, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(WatchlistsActivity.this, WatchlistDetails.class);
+                intent.putExtra("name",name);
+                intent.putExtra("id",watchlistId);
+                startActivity(intent);
+            }
+        });
     }
 
 

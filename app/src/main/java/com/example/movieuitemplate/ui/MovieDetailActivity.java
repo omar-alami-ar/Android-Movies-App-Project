@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.example.movieuitemplate.R;
@@ -31,6 +32,7 @@ import com.example.movieuitemplate.adapters.ReviewsAdapter;
 import com.example.movieuitemplate.adapters.WatchlistLVadapter;
 import com.example.movieuitemplate.adapters.WatchlistsActivityAdapter;
 import com.example.movieuitemplate.models.Cast;
+import com.example.movieuitemplate.models.Like;
 import com.example.movieuitemplate.models.Movie;
 import com.example.movieuitemplate.models.MovieCompanie;
 import com.example.movieuitemplate.models.Review;
@@ -68,7 +70,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     private RecyclerView rvCast, rvCompanies,rvSimilar;
     private CastAdapter castAdapter;
     private MovieAdapter    movieAdapter;
-    private MaterialButton addToWatchlist;
+    private MaterialButton addToWatchlist,addToLikes;
+
+    private boolean liked;
+
     TextInputLayout tbReview;
 
     ListView reviewsListView;
@@ -117,6 +122,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
             public void onClick(View v) {
                 String movieTitle = getIntent().getStringExtra("title");
                 String movieID = String.valueOf(getIntent().getIntExtra("id",0));
+                String movieImg = getIntent().getStringExtra("imgURL");
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MovieDetailActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.watchlistlv_activity,null);
                 mBuilder.setTitle("Choose a watchlist");
@@ -144,6 +150,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
                         WatchlistLVadapter adapter = new WatchlistLVadapter(MovieDetailActivity.this,watchlists,dialog);
                         adapter.movieID = movieID;
                         adapter.movieName = movieTitle;
+                        adapter.movieImg = movieImg;
                         watchlistLV.setAdapter(adapter);
                     }
 
@@ -158,6 +165,35 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
 
 
 
+            }
+        });
+
+
+
+        addToLikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    if(liked == false) {
+                        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Likes");
+
+                        HashMap<String, String> hashMap = new HashMap<>();
+                        hashMap.put("id", String.valueOf(getIntent().getIntExtra("id", 0)));
+                        hashMap.put("name", getIntent().getStringExtra("title"));
+                        reference.child(String.valueOf(getIntent().getIntExtra("id", 0))).setValue(hashMap);
+                        addToLikes.setBackgroundColor(getResources().getColor(R.color.liked));
+                        addToLikes.setText("Added to likes");
+                        liked = true;
+                    } else {
+                        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Likes");
+                        reference.child(String.valueOf(getIntent().getIntExtra("id", 0))).removeValue();
+                        addToLikes.setBackgroundColor(getResources().getColor(R.color.notLiked));
+                        addToLikes.setText("Add to likes");
+                        liked = false;
+                    }
+
+                //addToLikes.setIconTint(getResources().getColor(R.color.liked));
             }
         });
 
@@ -197,6 +233,29 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         rvCast = findViewById(R.id.rvCast);
         rvSimilar = findViewById(R.id.rvSimilar);
        // rvCompanies = findViewById(R.id.rvComp);
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Likes");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(String.valueOf(getIntent().getIntExtra("id", 0)))) {
+                    addToLikes.setBackgroundColor(getResources().getColor(R.color.liked));
+                    addToLikes.setText("Added to likes");
+                    liked = true;
+                } else {
+                    addToLikes.setBackgroundColor(getResources().getColor(R.color.notLiked));
+                    addToLikes.setText("Add to likes");
+                    liked = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         tbReview = findViewById(R.id.tbReview);
         tbReview.setEndIconOnClickListener(new View.OnClickListener() {
@@ -246,6 +305,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         tvRating.setText(movieRating);
 
         addToWatchlist = findViewById(R.id.btnAddToWatchlist);
+        addToLikes = findViewById(R.id.btnAddToLikes);
 
 
        // getSupportActionBar().setTitle(movieTitle);
