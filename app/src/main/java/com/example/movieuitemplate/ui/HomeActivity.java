@@ -1,6 +1,7 @@
 package com.example.movieuitemplate.ui;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -28,6 +33,8 @@ import com.example.movieuitemplate.adapters.MovieAdapter;
 import com.example.movieuitemplate.adapters.SliderPageAdapter;
 import com.example.movieuitemplate.models.Movie;
 import com.example.movieuitemplate.models.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -39,11 +46,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -55,6 +67,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class HomeActivity extends AppCompatActivity implements MovieItemClickListener {
 
     private ViewPager sliderPager;
@@ -63,6 +77,8 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
 
     private TextView username;
     private TextView email;
+    private CircleImageView profileImg;
+
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
@@ -75,6 +91,11 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     private List<Movie> popularMovies = new ArrayList<>();
     private List<Movie> slideMovies = new ArrayList<>();
     private List<Movie> topRatedMovies = new ArrayList<>();
+
+
+    ProgressDialog progressDialog;
+    StorageReference storageReference;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +114,9 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
 
         setBottomNav_NavDraView();
 
+        setProfileIMG();
+
+
 
     }
 
@@ -107,6 +131,8 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         drawer.addDrawerListener(toggle);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorAccent));
         toggle.syncState();
+
+        bottomNavigationView.setSelectedItemId(R.id.home);
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -209,12 +235,14 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
 
         navigationView = findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
+        profileImg = header.findViewById(R.id.profileImg);
         username = header.findViewById(R.id.navUsername);
         email = header.findViewById(R.id.navEmail);
 
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -237,6 +265,45 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         drawer = findViewById(R.id.drawerLayout);
         bottomNavigationView = findViewById(R.id.bottomNavigation);
 
+
+    }
+
+
+    private void setProfileIMG(){
+
+        //initialisation of PROFILEIMG if exists
+        storageReference = FirebaseStorage.getInstance().getReference().child("images/"+firebaseUser.getUid());
+        try {
+            File localFile = File.createTempFile(firebaseUser.getUid(),"jpg");
+            storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(HomeActivity.this, "Picture retrieved", Toast.LENGTH_SHORT).show();
+                    Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                    profileImg.setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(HomeActivity.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        //put ProfileIMG when he clicks on the IMG
+        profileImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, 100);
+
+
+            }
+        });
     }
 
     @Override
@@ -494,5 +561,55 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         }
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100 && data != null && data.getData() != null) {
+
+            imageUri = data.getData();
+            profileImg.setImageURI(imageUri);
+
+
+
+            progressDialog = new ProgressDialog(HomeActivity.this);
+            progressDialog.setTitle("Uploading File....");
+            progressDialog.show();
+
+
+        /*SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CANADA);
+        Date now = new Date();
+        String fileName = formatter.format(now);*/
+            storageReference = FirebaseStorage.getInstance().getReference("images/" + firebaseUser.getUid());
+
+
+            storageReference.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            //profileImg.setImageURI(null);
+                            Toast.makeText(HomeActivity.this, "Successfully Uploaded", Toast.LENGTH_SHORT).show();
+                            if (progressDialog.isShowing())
+                                progressDialog.dismiss();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+
+                    if (progressDialog.isShowing())
+                        progressDialog.dismiss();
+                    Toast.makeText(HomeActivity.this, "Failed to Upload", Toast.LENGTH_SHORT).show();
+
+
+                }
+            });
+
+
+        }
     }
 }
