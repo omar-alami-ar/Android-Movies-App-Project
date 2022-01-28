@@ -12,8 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieUiTemplate">
         <activity
-            android:name=".ui.MoreActivity"
-            android:exported="false" />
+            android:name=".ui.ProfileActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.WatchlistsActivity"/>
         <activity
             android:name=".ui.WatchlistDetails"
             android:exported="false"

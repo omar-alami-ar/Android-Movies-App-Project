@@ -87,14 +87,14 @@ public class ReviewAdapter extends BaseAdapter {
             storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(context, "Picture retrieved", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(context, "Picture retrieved", Toast.LENGTH_SHORT).show();
                     Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                     holder.userImg.setImageBitmap(bitmap);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(context, "Error Occurred", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(context, "Error Occurred", Toast.LENGTH_SHORT).show();
                 }
             });
         }catch (IOException e){

@@ -76,8 +76,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
 
     TextInputLayout tbReview;
 
-    ListView reviewsListView;
-    ReviewAdapter reviewAdapter;
+    RecyclerView reviewsListView;
+    ReviewsAdapter reviewAdapter;
     ArrayList<Review> reviews = new ArrayList<Review>();
 
     ListView watchlistLV;
@@ -211,9 +211,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     }
 
     private void setUpReviewsListView() {
-        reviewAdapter = new ReviewAdapter(MovieDetailActivity.this, reviews);
+        reviewAdapter = new ReviewsAdapter(MovieDetailActivity.this, reviews);
         reviewsListView.setAdapter(reviewAdapter);
-        //reviewsListView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        reviewsListView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
     private void setupRvCast() {
