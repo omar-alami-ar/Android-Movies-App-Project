@@ -80,10 +80,10 @@ public class ReviewAdapter extends BaseAdapter {
         holder.userName.setText(review.getUsername());
         holder.reviewText.setText(review.getReviewText());
 
-
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+review.userId);
+        
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+firebaseUser.getUid());
         try {
-            File localFile = File.createTempFile(review.userId,"jpg");
+            File localFile = File.createTempFile(firebaseUser.getUid(),"jpg");
             storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
