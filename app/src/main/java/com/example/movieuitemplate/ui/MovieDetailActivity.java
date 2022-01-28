@@ -92,6 +92,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         reviewsReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                reviews.clear();
                 for (DataSnapshot reviewSnapshot: snapshot.getChildren()) {
                     Review review = reviewSnapshot.getValue(Review.class);
                     if (review.getMovieId().equals(String.valueOf(getIntent().getIntExtra("id", 0)))) {
@@ -100,6 +101,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
 
                 }
                 setUpReviewsListView();
+
             }
 
             @Override
@@ -155,13 +157,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-
-
                 });
-
-
-
-
             }
         });
 
