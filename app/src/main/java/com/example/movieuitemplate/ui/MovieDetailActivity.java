@@ -271,6 +271,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
                             hashMap.put("reviewText", tbReview.getEditText().getText().toString());
 
                             reference.push().setValue(hashMap);
+
                         }
 
                         @Override
@@ -278,6 +279,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
 
                         }
                     });
+                    tbReview.getEditText().setText("");
 
                 }
             }
