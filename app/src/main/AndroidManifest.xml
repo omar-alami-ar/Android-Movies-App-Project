@@ -12,9 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieUiTemplate">
         <activity
-            android:name=".ui.WatchlistDetails"
-            android:parentActivityName=".ui.WatchlistsActivity"
+            android:name=".ui.MoreActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.WatchlistDetails"
+            android:exported="false"
+            android:parentActivityName=".ui.WatchlistsActivity" />
         <activity
             android:name=".ui.GenreMoviesActivity"
             android:exported="false" />

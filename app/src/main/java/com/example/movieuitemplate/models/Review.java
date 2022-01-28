@@ -2,14 +2,23 @@ package com.example.movieuitemplate.models;
 
 public class Review {
     //public int id;
-    public String username,reviewText,movieId;
+    public String username,reviewText,movieId,userId;
 
     public Review() {
     }
 
-    public Review(String username, String reviewText) {
+    public Review(String username, String reviewText, String userId) {
         this.username = username;
         this.reviewText = reviewText;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
