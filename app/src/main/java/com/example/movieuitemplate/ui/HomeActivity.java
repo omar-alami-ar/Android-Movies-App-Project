@@ -164,9 +164,13 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.watchlists:
-                        Intent intent = new Intent(HomeActivity.this, WatchlistsActivity.class);
+                    case R.id.profileSettings:
+                        Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
                         startActivity(intent);
+                        break;
+                    case R.id.watchlists:
+                        Intent intent1 = new Intent(HomeActivity.this, WatchlistsActivity.class);
+                        startActivity(intent1);
                         break;
                     case R.id.mainHome:
                         drawer.closeDrawer(GravityCompat.START);
