@@ -60,7 +60,7 @@ public class WatchlistsActivityAdapter extends BaseAdapter {
             holder.watchlistImg = (ImageView) convertView.findViewById(R.id.watchlistImg);
             holder.watchlistName = (TextView) convertView.findViewById(R.id.watchlistTitle);
             holder.watchlistCount = (TextView) convertView.findViewById(R.id.watchlistCount);
-           // holder.removeBtn = (ImageButton) convertView.findViewById(R.id.removeBtn);
+            holder.removeBtn = (ImageView) convertView.findViewById(R.id.removeBtn);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -71,7 +71,7 @@ public class WatchlistsActivityAdapter extends BaseAdapter {
        // Glide.with(context).load("https://image.tmdb.org/t/p/original" +listData.get(position).getImage()).into(holder.watchlistImg);
         holder.watchlistName.setText(watchlist.getName());
         holder.watchlistCount.setText("Movies: " + watchlist.getCount());
-      /*  holder.removeBtn.setOnClickListener(new View.OnClickListener() {
+        holder.removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(context,watchlistId, Toast.LENGTH_SHORT).show();
@@ -85,7 +85,7 @@ public class WatchlistsActivityAdapter extends BaseAdapter {
                 listData.remove(watchlisttoremove);
                 notifyDataSetChanged();
             }
-        });*/
+        });
 
 
         //int imageId = this.getMipmapResIdByName(wa.getFlagName());
@@ -98,7 +98,7 @@ public class WatchlistsActivityAdapter extends BaseAdapter {
         ImageView watchlistImg;
         TextView watchlistName;
         TextView watchlistCount;
-       // ImageButton removeBtn;
+        ImageView removeBtn;
     }
 
 }
