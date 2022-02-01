@@ -96,6 +96,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     ProgressDialog progressDialog;
     StorageReference storageReference;
     Uri imageUri;
+    Boolean refreshImg=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +140,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
-
                         //Toast.makeText(HomeActivity.this, "You are already in home", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.search:
@@ -153,7 +153,9 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
                         startActivity(intent1);
                         break;
                     case R.id.more:
-                        Toast.makeText(HomeActivity.this, "we would go to more page", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "we would go to more page", Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent(HomeActivity.this, MoreActivity.class);
+                        startActivity(intent2);
                         break;
                 }
                 return true;
@@ -165,6 +167,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.profileSettings:
+                        refreshImg= true;
                         Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
                         startActivity(intent);
                         break;
@@ -389,7 +392,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             return current;
         }
 
@@ -461,7 +463,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             return current;
         }
 
@@ -608,12 +609,36 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
                     if (progressDialog.isShowing())
                         progressDialog.dismiss();
                     Toast.makeText(HomeActivity.this, "Failed to Upload", Toast.LENGTH_SHORT).show();
-
-
                 }
             });
-
-
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(refreshImg) {
+            storageReference = FirebaseStorage.getInstance().getReference().child("images/" + firebaseUser.getUid());
+            try {
+                File localFile = File.createTempFile(firebaseUser.getUid(), "jpg");
+                storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        // Toast.makeText(ProfileActivity.this, "Picture retrieved", Toast.LENGTH_SHORT).show();
+                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                        profileImg.setImageBitmap(bitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Toast.makeText(ProfileActivity.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            refreshImg= false;
+        }
+    }
+
 }

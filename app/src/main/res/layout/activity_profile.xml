@@ -28,7 +28,7 @@
         android:layout_gravity="center"
         android:layout_height="150dp"
         android:layout_marginTop="40dp"
-        android:src="@drawable/ic_baseline_local_movies_24"
+        android:src="@drawable/ic_baseline_person_24"
        />
 
     <TextView
@@ -53,5 +53,33 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#666666"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="40dp"/>
+
+    <EditText
+        android:id="@+id/ETUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="70dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Enter Your New UserName Here"
+        android:textColorHint="#555555"
+        android:textColor="@color/white"/>
+
+    <Button
+        android:id="@+id/ChangeUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Your User Name"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="100dp"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

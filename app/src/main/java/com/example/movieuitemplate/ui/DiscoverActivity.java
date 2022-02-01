@@ -78,7 +78,6 @@ public class DiscoverActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
-
                         //Toast.makeText(HomeActivity.this, "You are already in home", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(DiscoverActivity.this, HomeActivity.class);
                         startActivity(intent);
@@ -90,10 +89,11 @@ public class DiscoverActivity extends AppCompatActivity {
                         break;
                     case R.id.discover:
                         //Toast.makeText(HomeActivity.this, "we would go to discover page ", Toast.LENGTH_SHORT).show();
-
                         break;
                     case R.id.more:
-                        Toast.makeText(DiscoverActivity.this, "we would go to more page", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(DiscoverActivity.this, "we would go to more page", Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent(DiscoverActivity.this, MoreActivity.class);
+                        startActivity(intent2);
                         break;
                 }
                 return true;

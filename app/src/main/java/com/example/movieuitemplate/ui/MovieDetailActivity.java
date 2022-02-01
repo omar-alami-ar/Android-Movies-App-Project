@@ -480,8 +480,5 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
             setUpRVSimilarMovies();
         }
 
-
-
-
     }
 }

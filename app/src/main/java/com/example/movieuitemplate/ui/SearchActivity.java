@@ -129,7 +129,9 @@ public class SearchActivity extends AppCompatActivity implements MovieItemClickL
                         startActivity(intent1);
                         break;
                     case R.id.more:
-                        Toast.makeText(SearchActivity.this, "we would go to more page", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(SearchActivity.this, "we would go to more page", Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent(SearchActivity.this, MoreActivity.class);
+                        startActivity(intent2);
                         break;
                 }
                 return true;
