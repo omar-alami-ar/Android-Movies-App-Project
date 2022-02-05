@@ -21,18 +21,24 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
 import com.example.movieuitemplate.adapters.MovieItemClickListener;
 import com.example.movieuitemplate.R;
 import com.example.movieuitemplate.adapters.MovieAdapter;
 import com.example.movieuitemplate.adapters.SliderPageAdapter;
+import com.example.movieuitemplate.models.Like;
 import com.example.movieuitemplate.models.Movie;
 import com.example.movieuitemplate.models.User;
+import com.example.movieuitemplate.models.WatchListItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -73,7 +79,10 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
 
     private ViewPager sliderPager;
     private TabLayout indicator;
-    private RecyclerView moviesRV, moviesRVWeek;
+    private RecyclerView moviesRV, moviesRVWeek,recommendationsRV;
+
+    ArrayList<String> likes = new ArrayList<String>();
+    String recommendations = "";
 
     private TextView username;
     private TextView email;
@@ -108,6 +117,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
 
         PopularMoviesData popularMoviesData = new PopularMoviesData();
         SlideMoviesData slideMoviesData = new SlideMoviesData();
+
         TopRatedMoviesData topRatedMoviesData = new TopRatedMoviesData();
         popularMoviesData.execute();
         slideMoviesData.execute();
@@ -116,6 +126,44 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         setBottomNav_NavDraView();
 
         setProfileIMG();
+
+        getRecommendations();
+
+
+
+    }
+
+    private void getRecommendations() {
+
+        if (! Python.isStarted()) {
+            Python.start(new AndroidPlatform(this));
+        }
+        Python py = Python.getInstance();
+        PyObject pyObject = py.getModule("new");
+        reference.child("Likes").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot likeSnapshot: snapshot.getChildren()) {
+                    Like like = likeSnapshot.getValue(Like.class);
+                    Log.e("like", "onDataChange: "+like.getMovieName() );
+
+                    likes.add(like.getMovieName());
+                    PyObject obj = pyObject.callAttr("main",like.getMovieName());
+                    //Toast.makeText(this,obj.toString(),Toast.LENGTH_SHORT).show();
+                    Log.e("obj", "onDataChange: "+obj.toString() );
+                    recommendations+=obj.toString();
+                    Log.e("likes", "onDataChange: "+likes.size() );
+                    Log.e("recs", "onDataChange: "+recommendations.toString() );
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+       // Toast.makeText(this,"Size"+ likes.size(), Toast.LENGTH_LONG).show();
 
 
 
@@ -239,6 +287,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         indicator = findViewById(R.id.indicator);
         moviesRV = findViewById(R.id.RvMovies);
         moviesRVWeek = findViewById(R.id.RvMoviesWeek);
+        recommendationsRV = findViewById(R.id.RvRecommendations);
 
         navigationView = findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);

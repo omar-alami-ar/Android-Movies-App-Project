@@ -171,8 +171,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
                     reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("Likes");
 
                         HashMap<String, String> hashMap = new HashMap<>();
-                        hashMap.put("id", String.valueOf(getIntent().getIntExtra("id", 0)));
-                        hashMap.put("name", getIntent().getStringExtra("title"));
+                        hashMap.put("movieID", String.valueOf(getIntent().getIntExtra("id", 0)));
+                        hashMap.put("movieName", getIntent().getStringExtra("title"));
                         reference.child(String.valueOf(getIntent().getIntExtra("id", 0))).setValue(hashMap);
                         addToLikes.setBackgroundColor(getResources().getColor(R.color.liked));
                         addToLikes.setText("Added to likes");
